@@ -8,5 +8,5 @@
 import Foundation
 
 enum SubmissionState {
-    case success, error, idle, pending
+  case success, error, idle, pending
 }
