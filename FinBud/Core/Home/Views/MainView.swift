@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MainView: View {
   @State var entry: String = ""
-
   @State var submission: SubmissionState?
 
   var body: some View {
