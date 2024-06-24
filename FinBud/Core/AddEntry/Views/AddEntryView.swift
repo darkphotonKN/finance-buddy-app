@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct AddEntryView: View {
+  @Environment(\.modelContext) private var modelContext
   @Binding var entry: String
   @Binding var submission: SubmissionState?
 
   let placeholder = "Enter Spending"
 
   // adds entered monetery value for calculation
-  func addEntry() {
+  private func addEntry() {
     // check if entry is a number
 
     let numberEntry = Int(entry)
@@ -29,15 +30,29 @@ struct AddEntryView: View {
 
       return
     }
-    print("numberEntry was a success: \(numberEntry)")
+    do {
+      print("numberentry was a success: \(numberEntry)")
 
-    // send entry off to be stored
+      // create spendingentry entity object
+      guard let amount = numberEntry else { return }
+      var newSpending = SpendingEntry(amount: amount, date: Date())
 
-    // reset entry value
-    entry = ""
+      // send entry off to be stored globally in swiftdata - spendingEntry entity
+      try modelContext.insert(newSpending)
+      try modelContext.save()
 
-    // show submission success
-    submission = SubmissionState.success
+      // reset entry value
+      entry = ""
+
+      // show submission success
+      submission = SubmissionState.success
+    } catch {
+      // throw error
+      submission = SubmissionState.error
+    }
+
+    // close number key keyboard
+    hideKeyboard()
   }
 
   var body: some View {
@@ -72,6 +87,6 @@ struct AddEntryView: View {
   }
 }
 
-#Preview {
-  AddEntryView(entry: .constant(""), submission: .constant(SubmissionState.idle))
-}
+// #Preview {
+//   AddEntryView(entry: .constant(""), submission: .constant(SubmissionState.idle))
+// }
