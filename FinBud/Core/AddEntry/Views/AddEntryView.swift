@@ -35,7 +35,7 @@ struct AddEntryView: View {
 
       // create spendingentry entity object
       guard let amount = numberEntry else { return }
-      var newSpending = SpendingEntry(amount: amount, date: Date())
+      var newSpending = SpendingEntry(amount: amount, date: Date.now)
 
       // send entry off to be stored globally in swiftdata - spendingEntry entity
       try modelContext.insert(newSpending)

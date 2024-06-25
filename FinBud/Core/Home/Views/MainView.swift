@@ -27,11 +27,11 @@ struct MainView: View {
       VStack {
         // MARK: App Navigation
         NavigationView(navigation: $navigation)
+        Spacer()
 
         switch navigation {
         // MARK: Central View
         case .central:
-          Spacer()
 
           // MARK: Main Title
           Text("FinBud").font(.system(size: 38, weight: .medium)).foregroundStyle(
@@ -42,16 +42,14 @@ struct MainView: View {
           // MARK: Core
           AddEntryView(entry: $entry, submission: $submission)
 
-          Spacer()
-
-          // MARK: Error Area
-          StatusModal(submission: $submission)
-
         // MARK: Analysis View
         case .analysis:
           MonthlyAnalysisView()
         }
 
+        Spacer()
+        // MARK: Status Area
+        StatusModal(submission: $submission)
       }.padding([.top, .bottom], 25)
     }.onAppear {
       logEntries()
@@ -65,7 +63,8 @@ struct MainView: View {
     print("Logging entries...")
 
     for entry in spendingEntries {
-      print("Entry \(index):", entry.amount)
+      print("Entry amount:", entry.amount)
+      print("Entry date:", entry.date)
     }
   }
 }

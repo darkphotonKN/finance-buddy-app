@@ -47,6 +47,8 @@ struct StatusModal: View {
           EmptyView()
         }
       }
+    }.onTapGesture {
+      submission = SubmissionState.idle
     }
   }
 }

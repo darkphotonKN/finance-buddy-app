@@ -12,11 +12,20 @@ struct NavigationView: View {
 
   var body: some View {
     HStack {
+      // CENTRAL
       Button(action: { navigate(destination: .central) }) {
         Text("Central")
+          .font(.system(size: 18, weight: navigation == .central ? .semibold : .medium))
+          .foregroundStyle(Color(.systemGray))
+
       }
+      .padding(.trailing, 15)
+
+      // ANALYSIS
       Button(action: { navigate(destination: .analysis) }) {
         Text("Analysis")
+          .font(.system(size: 18, weight: navigation == .analysis ? .semibold : .medium))
+          .foregroundStyle(Color(.systemGray))
       }
     }
   }

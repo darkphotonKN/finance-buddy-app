@@ -10,11 +10,28 @@ import SwiftUI
 
 struct MonthlyAnalysisView: View {
   @Query var spendingEntries: [SpendingEntry]
+  let dateFormatter: DateFormatter
+
+  init() {
+    self.dateFormatter = DateFormatter()
+    // format date style
+    self.dateFormatter.dateStyle = .short
+    // remove time
+    self.dateFormatter.timeStyle = .none
+  }
 
   var body: some View {
-    // Spending Entries
-    ForEach(spendingEntries, id: \.self) { spendingEntry in
-      Text(String(spendingEntry.amount))
-    }
+    VStack {
+      ForEach(spendingEntries) { spendingEntry in
+        HStack {
+          Text(String(spendingEntry.amount))
+            .font(.system(size: 18, weight: .light))
+          Spacer()
+          Text(dateFormatter.string(from: spendingEntry.date))
+            .font(.system(size: 18, weight: .light))
+        }
+      }
+    }.frame(width: 200)
+
   }
 }
